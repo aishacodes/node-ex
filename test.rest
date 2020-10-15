@@ -1,0 +1,28 @@
+
+GET http://localhost:3030/api/contacts/
+
+
+###
+
+POST http://localhost:3030/api/contacts/
+content-type: application/json
+
+  {
+    "name": "Ada Love",
+    "number": "39-44-5323523"
+  }
+
+###
+
+PATCH  http://localhost:3030/api/contacts/5
+content-type: application/json
+
+  {
+    "name": "Mary slessor",
+    "number": "39-44-5323523"
+  }
+
+###
+
+
+DELETE http://localhost:3030/api/contacts/5
