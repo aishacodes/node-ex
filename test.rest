@@ -26,5 +26,4 @@ content-type: application/json
 
 ###
 
-
 DELETE {{Host}}/contacts/2
