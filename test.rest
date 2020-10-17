@@ -4,6 +4,7 @@
 GET {{Host}}/contacts
 
 ###
+GET {{Host}}/contacts/5f8b1c9f5152a4404f7f25b6
 
 GET {{Host}}/info
 
@@ -19,7 +20,7 @@ content-type: application/json
 
 ###
 
-PATCH  {{Host}}/contacts/1
+PATCH  {{Host}}/contacts/5f8b1c9f5152a4404f7f25b6
 content-type: application/json
 
   {
@@ -28,4 +29,4 @@ content-type: application/json
 
 ###
 
-DELETE {{Host}}/contacts/2
+DELETE {{Host}}/contacts/5f8b1c9f5152a4404f7f25b6
