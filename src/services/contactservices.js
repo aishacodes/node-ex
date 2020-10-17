@@ -3,27 +3,27 @@
 let contacts = [
   { 
     "name": "Arto Hellas", 
-    "number": "040-123456",
+    "phone": "040-123456",
     "id": 1
   },
   { 
     "name": "Ada Lovelace", 
-    "number": "39-44-5323523",
+    "phone": "39-44-5323523",
     "id": 2
   },
   { 
     "name": "Dan Abramov", 
-    "number": "12-43-234345",
+    "phone": "12-43-234345",
     "id": 3
   },
   { 
     "name": "Mary Poppendieck", 
-    "number": "39-23-6423122",
+    "phone": "39-23-6423122",
     "id": 4
   },
   { 
     "name": "Mary slessor", 
-    "number": "39-23-6423122",
+    "phone": "39-23-6423122",
     "id": 5
   }
 ]
@@ -45,19 +45,24 @@ module.exports = {
     res.send(`Phonebook has info for ${lengthh} people <br><br><br> ${created}` )
   },
   
-  postContact(req, res){
-  
+  addContact(req, res){
     const contact = req.body
+    if (!contact) return res.status(400).send('contact "name" and "phone" are required!')
     if (!contact.name) return res.status(400).send('"name" is missing!')
+    if (!contact.phone) return res.status(400).send('"phone" is missing!')
   
     const contactExist = contacts.some(c => contact.name === c.name)
     if (contactExist) return res.status(409).send('Contact already exist')
   
-    contact.id = generateId(contacts)
+    const newContact = {
+      name: contact.name,
+      phone: contact.phone,
+      id: generateId(contacts)
+    }
    
-    contacts = contacts.concat(contact)
+    contacts = contacts.concat(newContact)
   
-    res.status(201).json(contacts)
+    res.status(201).json(newContact)
   },
   
   patchContact(req, res){

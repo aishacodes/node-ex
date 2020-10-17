@@ -3,6 +3,9 @@
 ###
 GET {{Host}}/contacts
 
+###
+
+GET {{Host}}/info
 
 ###
 
@@ -11,7 +14,7 @@ content-type: application/json
 
   {
     "name": "Ada Love",
-    "number": "39-44-5323523"
+    "phone": "39-44-5323523"
   }
 
 ###
@@ -20,8 +23,7 @@ PATCH  {{Host}}/contacts/1
 content-type: application/json
 
   {
-    "name": "Arto Hellas",
-    "number": "39-00-5323523"
+    "phone": "39-00-5323523"
   }
 
 ###

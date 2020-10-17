@@ -5,7 +5,7 @@ const {
   getContacts,
   getInfo,
   getContact,
-  postContact,
+  addContact,
   patchContact,
   deleteContact,
 } = require('../services/contactservices') 
@@ -17,7 +17,7 @@ router.get('/contacts/', getContacts)
 
 router.get('/info/', getInfo)
 
-router.post('/contacts', postContact)
+router.post('/contacts', addContact)
 
 router.patch('/contacts/:id', patchContact)
 
