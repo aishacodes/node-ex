@@ -28,21 +28,22 @@ const { Contact } = require('../models')
 //   }
 // ]
 
-const { generateId } = require('../utils')
+const { generateId, handleServerResponse } = require('../utils')
 
 module.exports = {
 
   getHome(req, res){
-    res.send('Hello World')
+    handleServerResponse(res, 'Hello world')
   },
   
   async getContacts(req, res){
     try {
       const contacts = await Contact.find()
 
-      res.json(contacts)
+      handleServerResponse(res, contacts)
     } catch (err) {
-      res.status(500).send('Could not fetch contact at this time')
+
+      handleServerResponse(res, 'Internal server error: Could not fetch contact at this time', 500, err)
     }
   },
   
@@ -54,19 +55,23 @@ module.exports = {
 
       res.send(`Phonebook has info for ${length} people <br><br><br> ${created}`)
     } catch (err) {
-      res.status(500).send('Server could not send info at this time')
+
+      handleServerResponse(res, 'Internal server error', 500, err)
+      
     }
   },
   
   async addContact(req, res){
     const contact = req.body
-    if (!contact) return res.status(400).send('contact "name" and "phone" are required!')
-    if (!contact.name) return res.status(400).send('"name" is missing!')
-    if (!contact.phone) return res.status(400).send('"phone" is missing!')
+    if (!contact) return handleServerResponse(res, 'contact "name" and "phone" are required!', 400) 
+
+    if (!contact.name) return handleServerResponse(res, '"name" is missing!', 400 )
+
+    if (!contact.phone) return handleServerResponse(res, '"phone" is missing!', 400) 
 
     try {
       const contactExist = await Contact.countDocuments({name: contact.name})
-    if (contactExist) return res.status(409).send('Contact already exist')
+    if (contactExist) return handleServerResponse(res, 'Contact already exist', 409)
   
     let newContact = new Contact({
       name: contact.name,
@@ -74,10 +79,11 @@ module.exports = {
     })
    
     newContact = await newContact.save()
-    res.status(201).json(newContact)
+    handleServerResponse(res, newContact, 201)
     
     } catch (error) {
-      res.status(500).send('Server could not send info at this time')
+
+      handleServerResponse(res, 'Server could not send info at this time', 500, error)
     }
     
   },
@@ -94,10 +100,10 @@ module.exports = {
 
       const contact = await Contact.findByIdAndUpdate(id, contactEdit)
 
-      res.json(contact)
+      handleServerResponse(res, contact)
     } catch (err) {
-      console.log(JSON.stringify(err, null, 2))
-      res.status(500).json({ message: 'Internal server error'})
+
+      handleServerResponse(res, 'Internal server error', 500 , err )
     }
 
 
@@ -105,13 +111,16 @@ module.exports = {
   
   async deleteContact(req, res){
     const {id} = req.params
-    if(!id) return res.status(400).send("Id of contact is required")
+    if(!id) return handleServerResponse(res, "Id of contact is required", 400)
+
     try {
       await Contact.findByIdAndRemove(id)
-      res.status(204).send("Contact has been removed")
+
+      handleServerResponse(res, "Contact has been removed", 204 )
+
     } catch (err) {
-      console.log(JSON.stringify(err, null, 2))
-      res.status(500).send("Internal server error")
+      handleServerResponse(res, 'Internal server error', 500)
+
     }
   
   },
@@ -120,11 +129,12 @@ module.exports = {
     const {id} =  req.params
     try {
       const contact = await Contact.findById(id)
-      if(!contact) return res.status(404).send(`contact with ID of ${id} not found`)
-      res.json(contact)
+      if(!contact) return handleServerResponse(res, `contact with ID of ${id} not found`, 404 )
+
+      handleServerResponse(res, contact)
     } catch (err) {
-      console.log(JSON.stringify(err, null, 2))
-      res.status(500).send("Internal server error")
+
+      handleServerResponse(res, "Internal server error", 500, err )
     }
   
    

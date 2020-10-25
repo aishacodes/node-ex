@@ -23,7 +23,7 @@ router.patch('/contacts/:id', patchContact)
 
 router.delete('/contacts/:id', deleteContact)
 
-router.get('/contacts/:id', getContact)
+router.get('/contact/:id', getContact)
 
 
 

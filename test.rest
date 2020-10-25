@@ -4,7 +4,14 @@
 GET {{Host}}/contacts
 
 ###
-GET {{Host}}/contacts/5f8b1c9f5152a4404f7f25b6
+GET {{Host}}/contact/5f8b1c9f5152a4404f7f25b6
+
+###
+
+GET {{Host}}/
+
+
+###
 
 GET {{Host}}/info
 
@@ -14,8 +21,8 @@ POST {{Host}}/contacts
 content-type: application/json
 
   {
-    "name": "Ada Love",
-    "phone": "39-44-5323523"
+    "name": "Ada chuka",
+    "phone": "00-22-5323523"
   }
 
 ###
